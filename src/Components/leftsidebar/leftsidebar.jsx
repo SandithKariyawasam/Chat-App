@@ -1,8 +1,11 @@
 import React from 'react'
 import './left.css'
 import assets from '../../../assets/assets'
+import { useNavigate } from 'react-router-dom'
 
 const leftsidebar = () => {
+
+    const navigate = useNavigate();
   return (
     <div className='ls'>
         <div className="ls-top">
@@ -11,7 +14,7 @@ const leftsidebar = () => {
                 <div className="menu">
                     <img src={assets.menu_icon} alt="" />
                     <div className="sub-menu">
-                        <p>Edit profile</p>
+                        <p onClick={()=>navigate('/profileupdate')}>Edit profile</p>
                         <hr />
                         <p>Logout</p>
                     </div>
