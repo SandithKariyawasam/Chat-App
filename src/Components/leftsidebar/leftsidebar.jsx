@@ -10,7 +10,7 @@ import { arrayUnion } from 'firebase/firestore';
 
 const LeftSidebar = () => {
     const navigate = useNavigate();
-    const { userData, chatData } = useContext(AppContext);
+    const { userData, chatData, chatUser, setChatUser, setMessagesId, messageId } = useContext(AppContext);
     const [user, setUser] = useState(null);
     const [showSearch, setShowSearch] = useState(false);
 
@@ -80,7 +80,8 @@ const LeftSidebar = () => {
     }
 
     const setChat = async (item) => {
-        console.log(item);
+        setMessagesId(item.messageId);
+        setChatUser(item)
     }
 
     return (
