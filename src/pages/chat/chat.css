@@ -18,3 +18,13 @@
     font-size: 40px;
     color: azure;
 }
+
+
+@media (max-width: 768px) {
+    .chat-container{
+        display: flex;
+    }
+    .loading{
+        font-size: 30px;
+    }
+}
