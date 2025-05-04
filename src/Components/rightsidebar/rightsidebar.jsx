@@ -1,31 +1,46 @@
-import React from 'react'
-import './right.css'
-import assets from '../../../assets/assets'
-import { logout } from '../../Config/firebase'
+import React, { useContext, useEffect, useState } from 'react';
+import './right.css';
+import assets from '../../../assets/assets';
+import { logout } from '../../Config/firebase';
+import { AppContext } from '../../context/AppContext';
 
-const rightsidebar = () => {
+const RightSidebar = () => {
+  const { chatUser, messages } = useContext(AppContext);
+  const [msgImages, setMsgImages] = useState([]);
+
+  useEffect(() => {
+    const tempImages = messages
+      .filter((msg) => msg?.image)
+      .map((msg) => msg.image);
+    setMsgImages(tempImages);
+  }, [messages]);
+
   return (
     <div className='rs'>
-      <div className="rs-profile">
-        <img src={assets.profile_img} alt="" />
-        <h3>Sandith kariyawasam <img src={assets.green_dot} className='dot' alt="" /></h3>
-        <p>Hey, I'm sandith </p>
-      </div>
-      <hr/>
-      <div className="rs-media">
-        <p>Media</p>
-        <div>
-          <img src={assets.pic1} alt="" />
-          <img src={assets.pic2} alt="" />
-          <img src={assets.pic3} alt="" />
-          <img src={assets.pic4} alt="" />
-          <img src={assets.pic1} alt="" />
-          <img src={assets.pic2} alt="" />
-        </div>
-      </div>
-      <button onClick={()=> logout()}>Logout</button>
+      {chatUser && (
+        <>
+          <div className="rs-profile">
+            <img src={chatUser.userData?.avatar} alt="avatar" />
+            <h3>
+              {chatUser.userData?.name}
+              <img src={assets.green_dot} className='dot' alt="online" />
+            </h3>
+            <p>{chatUser.userData?.bio}</p>
+          </div>
+          <hr />
+          <div className="rs-media">
+            <p>Media</p>
+            <div>
+              {msgImages.map((url, index) => (
+                <img onClick={()=>window.open(url)} key={index} src={url} alt={`media-${index}`} />
+              ))}
+            </div>
+          </div>
+        </>
+      )}
+      <button onClick={logout}>Logout</button>
     </div>
-  )
-}
+  );
+};
 
-export default rightsidebar
+export default RightSidebar;
